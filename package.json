@@ -1,0 +1,15 @@
+{
+  "name": "express-201-new",
+  "version": "1.0.0",
+  "description": "",
+  "main": "appUse.js",
+  "scripts": {
+    "start": "nodemon appUse.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.2"
+  }
+}
