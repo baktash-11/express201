@@ -1,9 +1,13 @@
 // middleware is any function which has access to the req, res, next 
 const express = require ('express');
 const path = require('path');
+const helmet = require('helmet');
 const app = express ();
 
 app.use(express.static('public'));
+app.use(express.json());
+app.use(express.urlencoded({extended: false}));
+
 
 function validateUser (req, res, next){
     res.locals.validated = true; 
@@ -19,10 +23,20 @@ app.get('/', validateUser);
 // will run only on /admin route
 app.use('/admin', validateUser);
 
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
+//using render to run esj and pass data.
+const today = new Date();
+const [month, day, year] = [today.getMonth() +1, today.getDate(),  today.getFullYear()];
 app.get('/', (req, res, next)=>{
-    res.send('<h3> Hello, From Middleware in Express');
-    console.log(res.locals.validated);
-   
+    res.render('index', {
+    title: 'Welcome to Ejs', 
+    date: `${day} / ${month} / ${year}`
+    
+});
+console.log(today)
+  
 });
 
 app.get('/admin', (req, res, next)=>{
